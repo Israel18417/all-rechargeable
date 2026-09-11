@@ -1,0 +1,73 @@
+[debug] [2026-09-11T19:40:40.400Z] ----------------------------------------------------------------------
+[debug] [2026-09-11T19:40:40.405Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\HP USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting --project all-rechargeable --non-interactive
+[debug] [2026-09-11T19:40:40.406Z] CLI Version:   15.30.0
+[debug] [2026-09-11T19:40:40.406Z] Platform:      win32
+[debug] [2026-09-11T19:40:40.406Z] Node Version:  v22.17.0
+[debug] [2026-09-11T19:40:40.407Z] Detected Agent: unknown
+[debug] [2026-09-11T19:40:40.407Z] Time:          Fri Sep 11 2026 20:40:40 GMT+0100 (West Africa Standard Time)
+[debug] [2026-09-11T19:40:40.407Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-09-11T19:40:47.052Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-11T19:40:47.052Z] > authorizing via signed-in user (israeljuwon28@gmail.com)
+[debug] [2026-09-11T19:40:47.052Z] [iam] checking project all-rechargeable for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-09-11T19:40:47.086Z] Checked if tokens are valid: true, expires at: 1789156567699
+[debug] [2026-09-11T19:40:47.086Z] Checked if tokens are valid: true, expires at: 1789156567699
+[debug] [2026-09-11T19:40:47.089Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions [none]
+[debug] [2026-09-11T19:40:47.089Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions  x-goog-user-project=all-rechargeable
+[debug] [2026-09-11T19:40:47.089Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-09-11T19:40:52.210Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions 200
+[debug] [2026-09-11T19:40:52.211Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-09-11T19:40:52.212Z] Checked if tokens are valid: true, expires at: 1789156567699
+[debug] [2026-09-11T19:40:52.212Z] Checked if tokens are valid: true, expires at: 1789156567699
+[debug] [2026-09-11T19:40:52.212Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/all-rechargeable [none]
+[debug] [2026-09-11T19:40:57.728Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/all-rechargeable 200
+[debug] [2026-09-11T19:40:57.728Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/all-rechargeable {"projectId":"all-rechargeable","projectNumber":"254413648713","displayName":"all-rechargeable","name":"projects/all-rechargeable","resources":{"hostingSite":"all-rechargeable"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_0a98569a-a2d7-4cc7-b89b-bbaffd5f38a9"}
+[debug] [2026-09-11T19:41:04.087Z] Checked if tokens are valid: true, expires at: 1789156567699
+[debug] [2026-09-11T19:41:04.087Z] Checked if tokens are valid: true, expires at: 1789156567699
+[debug] [2026-09-11T19:41:04.088Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites pageToken=&pageSize=10
+[debug] [2026-09-11T19:41:10.663Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites 200
+[debug] [2026-09-11T19:41:10.663Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites {"sites":[{"name":"projects/all-rechargeable/sites/all-rechargeable","defaultUrl":"https://all-rechargeable.web.app","appId":"1:254413648713:web:0f19c90b388e19d6ad6098","type":"DEFAULT_SITE"}]}
+[debug] [2026-09-11T19:41:10.663Z] Checked if tokens are valid: false, expires at: 1789156567699
+[debug] [2026-09-11T19:41:10.663Z] Checked if tokens are valid: false, expires at: 1789156567699
+[debug] [2026-09-11T19:41:10.664Z] > refreshing access token with scopes: []
+[debug] [2026-09-11T19:41:10.667Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-09-11T19:41:10.667Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-09-11T19:41:15.103Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-09-11T19:41:15.103Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-09-11T19:41:15.117Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:254413648713:web:0f19c90b388e19d6ad6098/config [none]
+[debug] [2026-09-11T19:41:17.358Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:254413648713:web:0f19c90b388e19d6ad6098/config 200
+[debug] [2026-09-11T19:41:17.359Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:254413648713:web:0f19c90b388e19d6ad6098/config {"projectId":"all-rechargeable","appId":"1:254413648713:web:0f19c90b388e19d6ad6098","storageBucket":"all-rechargeable.firebasestorage.app","apiKey":"AIzaSyBr7jMmtqDR_pideN6TPcbM9lQOZECPYUA","authDomain":"all-rechargeable.firebaseapp.com","messagingSenderId":"254413648713","measurementId":"G-R3S329RML9","projectNumber":"254413648713","version":"2"}
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 16.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-09-11T19:41:31.498Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:41:31.498Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:41:31.499Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable [none]
+[debug] [2026-09-11T19:41:34.238Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable 200
+[debug] [2026-09-11T19:41:34.238Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable {"name":"projects/all-rechargeable/sites/all-rechargeable","defaultUrl":"https://all-rechargeable.web.app","appId":"1:254413648713:web:0f19c90b388e19d6ad6098","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.3.4 (Turbopack)
+
+[info] - Environments: .env.local
+
+[info] ⚠ Warning: Next.js ignored package-lock.json in C:\Users\HP USER because it is outside the current Git repository (C:\Users\HP USER\OneDrive\Pictures\CasRael\All rechargeable\all-rechargeable).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+
+[info] ✓ Running next.config.ts took 279ms
+
+[info] 
+
+[info]   Creating an optimized production build ...
+
+[info] ✓ Compiled successfully in 21.8s
+
+[info]   Running TypeScript ...
+
