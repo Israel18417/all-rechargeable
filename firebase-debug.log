@@ -71,3 +71,138 @@
 
 [info]   Running TypeScript ...
 
+[info]   Finished TypeScript in 10.5s ...
+
+[info]   Collecting page data using 7 workers ...
+
+[debug] [2026-09-11T19:42:16.009Z] ----------------------------------------------------------------------
+[debug] [2026-09-11T19:42:16.020Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\HP USER\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only hosting --project all-rechargeable --non-interactive --debug
+[debug] [2026-09-11T19:42:16.021Z] CLI Version:   15.30.0
+[debug] [2026-09-11T19:42:16.022Z] Platform:      win32
+[debug] [2026-09-11T19:42:16.023Z] Node Version:  v22.17.0
+[debug] [2026-09-11T19:42:16.024Z] Detected Agent: github_copilot_vscode_agent
+[debug] [2026-09-11T19:42:16.025Z] Time:          Fri Sep 11 2026 20:42:16 GMT+0100 (West Africa Standard Time)
+[debug] [2026-09-11T19:42:16.026Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-09-11T19:42:27.115Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-09-11T19:42:27.130Z] > authorizing via signed-in user (israeljuwon28@gmail.com)
+[debug] [2026-09-11T19:42:27.136Z] [iam] checking project all-rechargeable for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2026-09-11T19:42:27.204Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:42:27.205Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:42:27.210Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions [none]
+[debug] [2026-09-11T19:42:27.216Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions  x-goog-user-project=all-rechargeable
+[debug] [2026-09-11T19:42:27.238Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[info]   Generating static pages using 7 workers (0/10) ...
+
+[debug] [2026-09-11T19:42:32.056Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions 200
+[debug] [2026-09-11T19:42:32.057Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/all-rechargeable:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2026-09-11T19:42:32.059Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:42:32.059Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:42:32.060Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/all-rechargeable [none]
+[debug] [2026-09-11T19:42:33.714Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/all-rechargeable 200
+[info]   Generating static pages using 7 workers (2/10) 
+
+[info]   Generating static pages using 7 workers (4/10) 
+  Generating static pages using 7 workers (7/10) 
+
+[info] ✓ Generating static pages using 7 workers (10/10) in 8.4s
+
+[info]   Finalizing page optimization ...
+
+[info] 
+
+[info] Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /about
+├ ○ /admin/dashboard
+├ ○ /admin/login
+├ ○ /cart
+├ ○ /contact
+├ ○ /products
+└ ƒ /products/[id]
+
+
+[info] 
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+
+[debug] [2026-09-11T19:42:33.715Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/all-rechargeable {"projectId":"all-rechargeable","projectNumber":"254413648713","displayName":"all-rechargeable","name":"projects/all-rechargeable","resources":{"hostingSite":"all-rechargeable"},"state":"ACTIVE","labels":{"firebase":"enabled"},"etag":"1_0a98569a-a2d7-4cc7-b89b-bbaffd5f38a9"}
+[debug] [2026-09-11T19:42:45.605Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:42:45.605Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:42:45.606Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites pageToken=&pageSize=10
+[info] Building a Cloud Function to run this application. This is needed due to:
+[info]  • non-static component /products/[id]/page
+[info] 
+[debug] [2026-09-11T19:42:47.153Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites 200
+[debug] [2026-09-11T19:42:47.153Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites {"sites":[{"name":"projects/all-rechargeable/sites/all-rechargeable","defaultUrl":"https://all-rechargeable.web.app","appId":"1:254413648713:web:0f19c90b388e19d6ad6098","type":"DEFAULT_SITE"}]}
+[debug] [2026-09-11T19:42:47.155Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:42:47.155Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:42:47.156Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:254413648713:web:0f19c90b388e19d6ad6098/config [none]
+[debug] [2026-09-11T19:42:49.324Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:254413648713:web:0f19c90b388e19d6ad6098/config 200
+[debug] [2026-09-11T19:42:49.327Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/-/webApps/1:254413648713:web:0f19c90b388e19d6ad6098/config {"projectId":"all-rechargeable","appId":"1:254413648713:web:0f19c90b388e19d6ad6098","storageBucket":"all-rechargeable.firebasestorage.app","apiKey":"AIzaSyBr7jMmtqDR_pideN6TPcbM9lQOZECPYUA","authDomain":"all-rechargeable.firebaseapp.com","messagingSenderId":"254413648713","measurementId":"G-R3S329RML9","projectNumber":"254413648713","version":"2"}
+[debug] [2026-09-11T19:43:08.497Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:43:08.497Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:43:08.498Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable [none]
+[info] 
+   Thank you for trying our early preview of Next.js support on Firebase Hosting.
+   During the preview, support is best-effort and breaking changes can be expected. Proceed with caution.
+   The integration is known to work with Next.js version 12 - 16.0. You may encounter errors.
+
+   Documentation: https://firebase.google.com/docs/hosting/frameworks/nextjs
+   File a bug: https://github.com/firebase/firebase-tools/issues/new?template=bug_report.md
+   Submit a feature request: https://github.com/firebase/firebase-tools/issues/new?template=feature_request.md
+
+   We'd love to learn from you. Express your interest in helping us shape the future of Firebase Hosting: https://goo.gle/41enW5X
+
+[debug] [2026-09-11T19:43:12.396Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable 200
+[debug] [2026-09-11T19:43:12.396Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable {"name":"projects/all-rechargeable/sites/all-rechargeable","defaultUrl":"https://all-rechargeable.web.app","appId":"1:254413648713:web:0f19c90b388e19d6ad6098","type":"DEFAULT_SITE"}
+[debug] [2026-09-11T19:43:18.080Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:43:18.183Z] Checked if tokens are valid: true, expires at: 1789159274104
+[debug] [2026-09-11T19:43:18.199Z] >>> [apiv2][query] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable [none]
+[debug] [2026-09-11T19:43:21.298Z] <<< [apiv2][status] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable 200
+[debug] [2026-09-11T19:43:21.313Z] <<< [apiv2][body] GET https://firebasehosting.googleapis.com/v1beta1/projects/all-rechargeable/sites/all-rechargeable {"name":"projects/all-rechargeable/sites/all-rechargeable","defaultUrl":"https://all-rechargeable.web.app","appId":"1:254413648713:web:0f19c90b388e19d6ad6098","type":"DEFAULT_SITE"}
+[info] ▲ Next.js 16.3.4 (Turbopack)
+
+[info] - Environments: .env.local
+
+[info] ⚠ Warning: Next.js ignored package-lock.json in C:\Users\HP USER because it is outside the current Git repository (C:\Users\HP USER\OneDrive\Pictures\CasRael\All rechargeable\all-rechargeable).
+ To use this directory, set `turbopack.root` in your Next.js config.
+
+
+[info] ✓ Running next.config.ts took 332ms
+
+[info] 
+
+[info]   Creating an optimized production build ...
+
+[info] 
+
+[info] [4279.84ms] [@tailwindcss/postcss] app\globals.css
+
+[info] [   0.64ms]   ↳ Quick bail check
+[1152.31ms]   ↳ Setup compiler
+[   5.31ms]     ↳ PostCSS AST -> Tailwind CSS AST
+[1146.34ms]     ↳ Create compiler
+[   0.59ms]   ↳ Register full rebuild paths
+[ 159.02ms]   ↳ Setup scanner
+[ 324.71ms]   ↳ Scan for candidates
+[ 140.25ms]   ↳ Register dependency messages
+[1830.51ms]   ↳ Build utilities
+[ 581.62ms]   ↳ Optimization
+[   2.31ms]     ↳ AST -> CSS
+[ 381.17ms]     ↳ Lightning CSS
+[ 198.04ms]     ↳ CSS -> PostCSS AST
+[  86.10ms]   ↳ Update PostCSS AST
+
+[info] 
+
+[info] ✓ Compiled successfully in 20.5s
+
+[info]   Running TypeScript ...
+
+[info]   Finished TypeScript in 31.3s ...
+
+[info]   Collecting page data using 7 workers ...
+
