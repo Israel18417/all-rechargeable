@@ -21,61 +21,68 @@ export default function ProductCard({ product }: ProductCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group border border-purple-100">
-      {/* Product Image */}
-      <Link href={`/products/detail?id=${encodeURIComponent(product.id)}`}>
-        <div className="relative h-52 bg-purple-50 overflow-hidden">
+    <div className="group h-full overflow-hidden rounded-[28px] border border-purple-100 bg-white shadow-[0_12px_35px_rgba(124,58,237,0.08)] transition-all duration-300 hover:-translate-y-1 hover:shadow-[0_18px_45px_rgba(124,58,237,0.12)]">
+      <Link href={`/products/detail?id=${encodeURIComponent(product.id)}`} className="block">
+        <div className="relative h-60 overflow-hidden bg-gradient-to-br from-purple-50 via-white to-purple-100">
           {product.imageUrl ? (
             <Image
               src={product.imageUrl}
               alt={product.name}
               fill
-              className="object-cover group-hover:scale-105 transition-transform duration-300"
+              className="object-cover transition-transform duration-500 group-hover:scale-110"
             />
           ) : (
-            <div className="w-full h-full flex items-center justify-center text-6xl">
-              🔋
-            </div>
+            <div className="flex h-full items-center justify-center text-6xl">🔋</div>
           )}
+
           {!product.inStock && (
-            <div className="absolute inset-0 bg-black/50 flex items-center justify-center">
-              <span className="bg-red-500 text-white px-3 py-1 rounded-full text-sm font-semibold">Out of Stock</span>
+            <div className="absolute inset-0 flex items-center justify-center bg-black/45">
+              <span className="rounded-full bg-red-500 px-3 py-1 text-xs font-bold text-white">Out of Stock</span>
             </div>
           )}
+
           {product.featured && (
-            <span className="absolute top-2 left-2 bg-yellow-400 text-purple-900 text-xs font-bold px-2 py-1 rounded-full">
-              ⭐ Featured
+            <span className="absolute left-3 top-3 rounded-full bg-yellow-400 px-2.5 py-1 text-[10px] font-black uppercase tracking-[0.12em] text-purple-900">
+              Featured
             </span>
           )}
         </div>
       </Link>
 
-      {/* Product Info */}
-      <div className="p-4">
-        <span className="text-xs text-purple-500 font-medium uppercase tracking-wide">{product.category}</span>
-        <Link href={`/products/detail?id=${encodeURIComponent(product.id)}`}>
-          <h3 className="font-bold text-gray-800 mt-1 mb-1 text-lg line-clamp-2 hover:text-purple-700 transition-colors">
+      <div className="space-y-4 p-4">
+        <div className="flex items-center justify-between gap-2">
+          <span className="rounded-full bg-purple-100 px-2 py-1 text-[10px] font-bold uppercase tracking-[0.14em] text-purple-700">
+            {product.category}
+          </span>
+          <span className="text-xs font-medium text-gray-500">{product.inStock ? 'Available' : 'Unavailable'}</span>
+        </div>
+
+        <Link href={`/products/detail?id=${encodeURIComponent(product.id)}`} className="block">
+          <h3 className="line-clamp-2 text-lg font-extrabold leading-snug text-gray-800 transition-colors hover:text-purple-700">
             {product.name}
           </h3>
         </Link>
-        <p className="text-gray-500 text-sm line-clamp-2 mb-3">{product.description}</p>
 
-        <div className="flex items-center justify-between">
-          <span className="text-2xl font-bold text-purple-700">
-            ₦{product.price.toLocaleString()}
-          </span>
+        <p className="line-clamp-2 text-sm leading-6 text-gray-500">{product.description}</p>
+
+        <div className="flex items-end justify-between gap-3 pt-2">
+          <div>
+            <p className="text-[11px] uppercase tracking-[0.12em] text-gray-400">From</p>
+            <p className="text-2xl font-black text-purple-700">₦{product.price.toLocaleString()}</p>
+          </div>
+
           <button
             onClick={handleAddToCart}
             disabled={!product.inStock}
-            className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+            className={`rounded-full px-4 py-2.5 text-sm font-bold transition-all ${
               !product.inStock
-                ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                ? 'cursor-not-allowed bg-gray-200 text-gray-400'
                 : added
-                ? 'bg-green-500 text-white'
-                : 'bg-purple-700 text-white hover:bg-purple-900'
+                  ? 'bg-green-500 text-white'
+                  : 'bg-purple-700 text-white hover:bg-purple-900'
             }`}
           >
-            {!product.inStock ? 'Out of Stock' : added ? '✓ Added!' : 'Add to Cart'}
+            {!product.inStock ? 'Sold out' : added ? 'Added!' : 'Add to cart'}
           </button>
         </div>
       </div>

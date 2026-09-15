@@ -40,25 +40,25 @@ export default function HomePage() {
   return (
     <div>
       {/* Hero Section */}
-      <section style={{ background: 'linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #a78bfa 100%)' }} className="text-white py-20 px-4 relative overflow-hidden">
+      <section style={{ background: 'linear-gradient(135deg, #4c1d95 0%, #7c3aed 50%, #a78bfa 100%)' }} className="relative overflow-hidden px-4 py-20 text-white md:py-24">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.2),transparent_35%)]" />
-        <div className="relative max-w-6xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-purple-100 backdrop-blur-sm mb-6">
+        <div className="relative mx-auto max-w-6xl text-center">
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-purple-100 backdrop-blur-sm">
             <span>⚡</span> Trusted rechargeable essentials for homes, offices & businesses
           </div>
-          <div className="flex justify-center mb-4">
+          <div className="mb-5 flex justify-center">
             <BrandLogo className="h-20 w-20" />
           </div>
-          <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
+          <h1 className="mb-4 text-4xl font-extrabold leading-tight md:text-6xl">
             Power Up Your Life
           </h1>
-          <p className="text-xl md:text-2xl text-purple-200 mb-8 max-w-3xl mx-auto">
+          <p className="mx-auto mb-8 max-w-3xl text-xl text-purple-200 md:text-2xl">
             Premium rechargeable products delivered to your doorstep in Nigeria. Built for reliability, comfort, and everyday convenience.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <Link
               href="/products"
-              className="bg-white text-purple-700 font-bold px-8 py-4 rounded-full text-lg hover:bg-yellow-300 hover:text-purple-900 transition-all shadow-lg"
+              className="rounded-full bg-white px-8 py-4 text-lg font-bold text-purple-700 shadow-lg transition-all hover:bg-yellow-300 hover:text-purple-900"
             >
               Shop Now 🛒
             </Link>
@@ -66,13 +66,13 @@ export default function HomePage() {
               href={`https://wa.me/${process.env.NEXT_PUBLIC_WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
-              className="border-2 border-white text-white font-bold px-8 py-4 rounded-full text-lg hover:bg-white hover:text-purple-700 transition-all"
+              className="rounded-full border-2 border-white px-8 py-4 text-lg font-bold text-white transition-all hover:bg-white hover:text-purple-700"
             >
               Chat on WhatsApp 💬
             </a>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto text-left">
+          <div className="mx-auto mt-10 grid max-w-4xl grid-cols-2 gap-4 text-left md:grid-cols-4">
             {[
               { label: 'Products', value: '200+' },
               { label: 'Happy buyers', value: '1.5k+' },
@@ -89,62 +89,68 @@ export default function HomePage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-12 px-4 bg-purple-50">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 sm:grid-cols-3 gap-6 text-center">
+      <section className="bg-purple-50 px-4 py-16 md:py-20">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 gap-6 text-center sm:grid-cols-3">
           {[
             { icon: '✅', title: 'Quality Products', desc: 'Every product is tested and trusted' },
             { icon: '🚚', title: 'Fast Delivery', desc: 'Quick delivery across Nigeria' },
             { icon: '💬', title: 'WhatsApp Support', desc: 'Order easily via WhatsApp' },
           ].map((item) => (
-            <div key={item.title} className="bg-white rounded-2xl p-6 shadow-sm border border-purple-100 transform hover:-translate-y-1 transition-transform">
-              <div className="text-4xl mb-3">{item.icon}</div>
-              <h3 className="font-bold text-purple-800 text-lg mb-1">{item.title}</h3>
-              <p className="text-gray-500 text-sm">{item.desc}</p>
+            <div key={item.title} className="transform rounded-[28px] border border-purple-100 bg-white p-7 shadow-[0_14px_40px_rgba(91,33,182,0.06)] transition-transform hover:-translate-y-1">
+              <div className="mb-3 text-4xl">{item.icon}</div>
+              <h3 className="mb-1 text-lg font-bold text-purple-800">{item.title}</h3>
+              <p className="text-sm text-gray-500">{item.desc}</p>
             </div>
           ))}
         </div>
       </section>
 
       {/* Categories */}
-      <section className="py-12 px-4 max-w-7xl mx-auto">
-        <h2 className="text-3xl font-extrabold text-center text-purple-800 mb-8">Shop by Category</h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4">
+      <section className="mx-auto max-w-7xl px-4 py-16 md:py-20">
+        <div className="mb-8 text-center">
+          <p className="mb-2 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">Popular Categories</p>
+          <h2 className="text-3xl font-extrabold text-purple-800 md:text-4xl">Shop by Category</h2>
+        </div>
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
           {categories.map((cat) => (
             <Link
               key={cat.name}
               href={`/products?category=${cat.name}`}
-              className="flex flex-col items-center gap-2 bg-white border-2 border-purple-100 rounded-2xl p-4 hover:border-purple-500 hover:shadow-md transition-all group"
+              className="group flex flex-col items-center gap-3 rounded-[24px] border border-purple-100 bg-white p-5 shadow-[0_8px_25px_rgba(124,58,237,0.05)] transition-all hover:-translate-y-1 hover:border-purple-300 hover:shadow-[0_14px_35px_rgba(124,58,237,0.1)]"
             >
-              <span className="text-4xl group-hover:scale-110 transition-transform">{cat.icon}</span>
-              <span className="text-sm font-semibold text-purple-700">{cat.name}</span>
+              <span className="text-4xl transition-transform group-hover:scale-110">{cat.icon}</span>
+              <span className="text-sm font-bold text-purple-700">{cat.name}</span>
             </Link>
           ))}
         </div>
       </section>
 
       {/* Featured Products */}
-      <section className="py-12 px-4 bg-purple-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-between mb-8">
-            <h2 className="text-3xl font-extrabold text-purple-800">⭐ Featured Products</h2>
-            <Link href="/products" className="text-purple-600 font-semibold hover:text-purple-800 transition-colors">
+      <section className="bg-purple-50 px-4 py-16 md:py-20">
+        <div className="mx-auto max-w-7xl">
+          <div className="mb-8 flex items-center justify-between gap-4">
+            <div>
+              <p className="mb-2 text-sm font-bold uppercase tracking-[0.2em] text-purple-500">Top picks</p>
+              <h2 className="text-3xl font-extrabold text-purple-800 md:text-4xl">⭐ Featured Products</h2>
+            </div>
+            <Link href="/products" className="font-semibold text-purple-600 transition-colors hover:text-purple-800">
               View All →
             </Link>
           </div>
 
           {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {[1, 2, 3, 4].map(i => (
-                <div key={i} className="bg-white rounded-2xl h-72 animate-pulse" />
+                <div key={i} className="h-72 animate-pulse rounded-[28px] bg-white" />
               ))}
             </div>
           ) : featuredProducts.length === 0 ? (
-            <div className="text-center py-12 text-gray-400">
-              <div className="text-5xl mb-4">🔋</div>
+            <div className="py-12 text-center text-gray-400">
+              <div className="mb-4 text-5xl">🔋</div>
               <p className="text-lg">Products coming soon! Check back later.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
               {featuredProducts.map(product => (
                 <ProductCard key={product.id} product={product} />
               ))}

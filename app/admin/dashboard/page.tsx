@@ -11,6 +11,7 @@ import {
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { auth, db, storage } from '@/lib/firebase';
 import { Product, Category } from '@/lib/types';
+import { sampleCategories } from '@/lib/sampleCatalog';
 import SettingsTab from './SettingsTab';
 import CategoriesTab from './CategoriesTab';
 import BrandLogo from '@/components/BrandLogo';
@@ -42,6 +43,20 @@ export default function AdminDashboard() {
   const [message, setMessage] = useState('');
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'products' | 'add' | 'settings' | 'categories'>('products');
+  const categoryOptions = categories.length > 0 ? categories : sampleCategories.map((cat, index) => ({ id: `seed-${index}`, ...cat }));
+
+  const fillQuickSample = () => {
+    setForm({
+      name: 'Rechargeable Standing Fan',
+      price: '21000',
+      description: 'Strong airflow rechargeable standing fan built for comfort, convenience, and long battery life.',
+      category: categoryOptions[0]?.name || 'Fans',
+      inStock: true,
+      featured: true,
+      imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80',
+    });
+    setImagePreview('https://images.unsplash.com/photo-1581578731548-c64695cc6952?auto=format&fit=crop&w=900&q=80');
+  };
 
   // Auth guard
   useEffect(() => {
@@ -75,9 +90,18 @@ export default function AdminDashboard() {
     try {
       const q = query(collection(db, 'categories'), orderBy('name', 'asc'));
       const snap = await getDocs(q);
-      setCategories(snap.docs.map(d => ({ id: d.id, ...d.data() } as Category)));
+      const dbCategories = snap.docs.map(d => ({ id: d.id, ...d.data() } as Category));
+
+      if (dbCategories.length === 0) {
+        const fallback = sampleCategories.map((cat, index) => ({ id: `sample-${index}`, ...cat } as Category));
+        setCategories(fallback);
+        return;
+      }
+
+      setCategories(dbCategories);
     } catch (err) {
       console.error(err);
+      setCategories(sampleCategories.map((cat, index) => ({ id: `sample-${index}`, ...cat } as Category)));
     }
   };
 
@@ -371,28 +395,39 @@ export default function AdminDashboard() {
 
         {/* Add/Edit Form */}
         {activeTab === 'add' && (
-          <div className="bg-white rounded-2xl shadow-sm border border-purple-100 p-6">
-            <h2 className="text-xl font-extrabold text-purple-800 mb-6">
-              {editingId ? '✏️ Edit Product' : '➕ Add New Product'}
-            </h2>
+          <div className="rounded-2xl border border-purple-100 bg-white p-6 shadow-sm">
+            <div className="mb-6 flex items-center justify-between gap-3">
+              <h2 className="text-xl font-extrabold text-purple-800">
+                {editingId ? '✏️ Edit Product' : '➕ Add New Product'}
+              </h2>
+              {!editingId && (
+                <button
+                  type="button"
+                  onClick={fillQuickSample}
+                  className="rounded-full border border-purple-200 bg-purple-50 px-4 py-2 text-xs font-bold uppercase tracking-[0.12em] text-purple-700 transition-colors hover:bg-purple-100"
+                >
+                  Quick sample
+                </button>
+              )}
+            </div>
+
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-                {/* Name */}
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Product Name *</label>
+                  <label className="mb-1 block text-sm font-semibold text-gray-700">Product Name *</label>
                   <input
                     type="text"
                     value={form.name}
                     onChange={e => setForm({ ...form, name: e.target.value })}
                     required
                     placeholder="e.g. Rechargeable Standing Fan"
-                    className="w-full px-4 py-3 border-2 border-purple-100 rounded-xl focus:outline-none focus:border-purple-500 text-gray-700"
+                    className="w-full rounded-xl border-2 border-purple-100 px-4 py-3 text-gray-700 focus:border-purple-500 focus:outline-none"
                   />
+                  <p className="mt-1 text-xs text-gray-400">Use a clear product name buyers will recognize.</p>
                 </div>
 
-                {/* Price */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Price (₦) *</label>
+                  <label className="mb-1 block text-sm font-semibold text-gray-700">Price (₦) *</label>
                   <input
                     type="number"
                     value={form.price}
@@ -400,26 +435,25 @@ export default function AdminDashboard() {
                     required
                     min="0"
                     placeholder="e.g. 15000"
-                    className="w-full px-4 py-3 border-2 border-purple-100 rounded-xl focus:outline-none focus:border-purple-500 text-gray-700"
+                    className="w-full rounded-xl border-2 border-purple-100 px-4 py-3 text-gray-700 focus:border-purple-500 focus:outline-none"
                   />
                 </div>
 
-                {/* Category */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Category *</label>
+                  <label className="mb-1 block text-sm font-semibold text-gray-700">Category *</label>
                   <select
-                    value={form.category}
+                    value={form.category || categoryOptions[0]?.name || 'Fans'}
                     onChange={e => setForm({ ...form, category: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-purple-100 rounded-xl focus:outline-none focus:border-purple-500 text-gray-700"
+                    className="w-full rounded-xl border-2 border-purple-100 px-4 py-3 text-gray-700 focus:border-purple-500 focus:outline-none"
                   >
-                    {categories.map(cat => <option key={cat.id} value={cat.name}>{cat.icon} {cat.name}</option>)}
-                    {categories.length === 0 && <option value="Fans">Fans</option>}
+                    {categoryOptions.map(cat => (
+                      <option key={cat.id} value={cat.name}>{cat.icon} {cat.name}</option>
+                    ))}
                   </select>
                 </div>
 
-                {/* Image */}
                 <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-1">Product Image</label>
+                  <label className="mb-1 block text-sm font-semibold text-gray-700">Product Image</label>
                   <input
                     type="file"
                     accept="image/*"
@@ -430,66 +464,71 @@ export default function AdminDashboard() {
                   <button
                     type="button"
                     onClick={() => fileInputRef.current?.click()}
-                    className="w-full px-4 py-3 border-2 border-dashed border-purple-300 rounded-xl text-purple-600 hover:border-purple-500 hover:bg-purple-50 transition-all text-sm font-medium"
+                    className="w-full rounded-xl border-2 border-dashed border-purple-300 px-4 py-3 text-sm font-medium text-purple-600 transition-all hover:border-purple-500 hover:bg-purple-50"
                   >
                     {imagePreview ? '📷 Change Image' : '📷 Upload Image'}
                   </button>
                   {imagePreview && (
-                    <div className="mt-2 relative w-20 h-20 rounded-lg overflow-hidden">
+                    <div className="relative mt-3 h-20 w-20 overflow-hidden rounded-lg border border-purple-100 bg-purple-50">
                       <Image src={imagePreview} alt="Preview" fill className="object-cover" />
                     </div>
                   )}
                 </div>
               </div>
 
-              {/* Description */}
               <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-1">Description *</label>
+                <label className="mb-1 block text-sm font-semibold text-gray-700">Description *</label>
                 <textarea
                   value={form.description}
                   onChange={e => setForm({ ...form, description: e.target.value })}
                   required
-                  rows={3}
-                  placeholder="Describe the product, its features, battery life, etc."
-                  className="w-full px-4 py-3 border-2 border-purple-100 rounded-xl focus:outline-none focus:border-purple-500 text-gray-700 resize-none"
+                  rows={4}
+                  placeholder="Describe the product, battery life, charging time, and key benefits."
+                  className="w-full resize-none rounded-xl border-2 border-purple-100 px-4 py-3 text-gray-700 focus:border-purple-500 focus:outline-none"
                 />
               </div>
 
-              {/* Toggles */}
               <div className="flex flex-wrap gap-6">
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <div
+                <label className="flex cursor-pointer items-center gap-3">
+                  <button
+                    type="button"
                     onClick={() => setForm({ ...form, inStock: !form.inStock })}
-                    className={`relative w-12 h-6 rounded-full transition-all ${form.inStock ? 'bg-green-500' : 'bg-gray-300'}`}
+                    className={`relative h-6 w-12 rounded-full transition-all ${form.inStock ? 'bg-green-500' : 'bg-gray-300'}`}
+                    aria-label="Toggle stock status"
                   >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all ${form.inStock ? 'left-7' : 'left-1'}`} />
-                  </div>
+                    <span className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow transition-all ${form.inStock ? 'left-7' : 'left-1'}`} />
+                  </button>
                   <span className="font-semibold text-gray-700">In Stock</span>
                 </label>
-                <label className="flex items-center gap-3 cursor-pointer">
-                  <div
+
+                <label className="flex cursor-pointer items-center gap-3">
+                  <button
+                    type="button"
                     onClick={() => setForm({ ...form, featured: !form.featured })}
-                    className={`relative w-12 h-6 rounded-full transition-all ${form.featured ? 'bg-yellow-400' : 'bg-gray-300'}`}
+                    className={`relative h-6 w-12 rounded-full transition-all ${form.featured ? 'bg-yellow-400' : 'bg-gray-300'}`}
+                    aria-label="Toggle featured status"
                   >
-                    <div className={`absolute top-1 w-4 h-4 bg-white rounded-full shadow transition-all ${form.featured ? 'left-7' : 'left-1'}`} />
-                  </div>
+                    <span className={`absolute top-1 h-4 w-4 rounded-full bg-white shadow transition-all ${form.featured ? 'left-7' : 'left-1'}`} />
+                  </button>
                   <span className="font-semibold text-gray-700">⭐ Featured on Homepage</span>
                 </label>
               </div>
 
-              {/* Buttons */}
               <div className="flex gap-3 pt-2">
                 <button
                   type="submit"
                   disabled={saving}
-                  className="flex-1 py-4 bg-purple-700 hover:bg-purple-900 text-white font-extrabold rounded-xl text-lg transition-all disabled:opacity-50"
+                  className="flex-1 rounded-xl bg-purple-700 py-4 text-lg font-extrabold text-white transition-all hover:bg-purple-900 disabled:opacity-50"
                 >
                   {saving ? 'Saving...' : editingId ? '✏️ Update Product' : '➕ Add Product'}
                 </button>
                 <button
                   type="button"
-                  onClick={() => { resetForm(); setActiveTab('products'); }}
-                  className="px-6 py-4 bg-gray-100 text-gray-600 font-bold rounded-xl hover:bg-gray-200 transition-all"
+                  onClick={() => {
+                    resetForm();
+                    setActiveTab('products');
+                  }}
+                  className="rounded-xl bg-gray-100 px-6 py-4 font-bold text-gray-600 transition-all hover:bg-gray-200"
                 >
                   Cancel
                 </button>
