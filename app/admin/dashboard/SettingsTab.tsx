@@ -80,7 +80,7 @@ export default function SettingsTab() {
               value={form.whatsappNumber}
               onChange={e => setForm({ ...form, whatsappNumber: e.target.value })}
               required
-              placeholder="2348000000000"
+              placeholder="2349046988683"
               className="w-full px-4 py-3 border-2 border-purple-100 rounded-xl focus:outline-none focus:border-purple-500 text-gray-700"
             />
             <p className="text-xs text-gray-400 mt-1">Include country code without '+'</p>

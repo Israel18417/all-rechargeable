@@ -12,7 +12,7 @@ interface SettingsContextType {
 }
 
 const defaultSettings: Settings = {
-  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '2348000000000',
+  whatsappNumber: process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '2349046988683',
   contactEmail: 'contact@allrechargeable.com',
   instagramUrl: 'https://www.instagram.com/all_rechargeableplus',
   heroTitle: 'Power Up Your Life',
