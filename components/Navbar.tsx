@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useCart } from '@/context/CartContext';
+import BrandLogo from '@/components/BrandLogo';
 
 export default function Navbar() {
   const { totalItems } = useCart();
@@ -12,9 +13,9 @@ export default function Navbar() {
     <nav style={{ background: 'linear-gradient(135deg, #5b21b6, #7c3aed)' }} className="text-white shadow-lg sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2 font-bold text-xl tracking-tight">
-          <span className="text-2xl">⚡</span>
-          <span>All Rechargeable<span className="text-yellow-300">+</span></span>
+        <Link href="/" className="flex items-center gap-2">
+          <BrandLogo className="h-10 w-10" />
+          <span className="font-black tracking-tight text-lg sm:text-xl uppercase text-white">All Rechargeable</span>
         </Link>
 
         {/* Desktop Menu */}

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useSettings } from '@/context/SettingsContext';
+import BrandLogo from '@/components/BrandLogo';
 
 export default function Footer() {
   const { settings } = useSettings();
@@ -11,8 +12,9 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
         {/* Brand */}
         <div>
-          <h3 className="text-xl font-bold mb-2 flex items-center gap-2">
-            <span>⚡</span> All Rechargeable<span className="text-yellow-300">+</span>
+          <h3 className="text-xl font-bold mb-3 flex items-center gap-3">
+            <BrandLogo className="h-9 w-9" />
+            <span className="uppercase tracking-tight">All Rechargeable</span>
           </h3>
           <p className="text-purple-200 text-sm leading-relaxed">
             Your number one destination for quality rechargeable products. Power up your life!
@@ -51,7 +53,7 @@ export default function Footer() {
         </div>
       </div>
       <div className="border-t border-purple-700 text-center py-4 text-purple-300 text-sm">
-        © {new Date().getFullYear()} All Rechargeable+. All rights reserved.
+        © {new Date().getFullYear()} All Rechargeable Plus. All rights reserved.
       </div>
     </footer>
   );

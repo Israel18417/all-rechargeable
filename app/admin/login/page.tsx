@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { useRouter } from 'next/navigation';
+import BrandLogo from '@/components/BrandLogo';
 
 const DEMO_ADMIN_EMAIL = (process.env.NEXT_PUBLIC_ADMIN_EMAIL || 'admin@allrechargeable.com').trim().toLowerCase();
 const DEMO_ADMIN_PASSWORD = process.env.NEXT_PUBLIC_ADMIN_PASSWORD || 'AllRechargeable123!';
@@ -44,9 +45,11 @@ export default function AdminLoginPage() {
     <div className="min-h-screen flex items-center justify-center px-4" style={{ background: 'linear-gradient(135deg, #4c1d95, #7c3aed)' }}>
       <div className="bg-white rounded-3xl shadow-2xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="text-5xl mb-3">⚡</div>
+          <div className="flex justify-center mb-4">
+            <BrandLogo className="h-16 w-16" />
+          </div>
           <h1 className="text-2xl font-extrabold text-purple-800">Admin Login</h1>
-          <p className="text-gray-400 text-sm mt-1">All Rechargeable+ Dashboard</p>
+          <p className="text-gray-400 text-sm mt-1">All Rechargeable Plus Dashboard</p>
         </div>
 
         <div className="mb-5 rounded-2xl bg-purple-50 border border-purple-100 px-4 py-3 text-sm text-purple-700">

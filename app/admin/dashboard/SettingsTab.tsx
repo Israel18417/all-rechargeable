@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { useSettings } from '@/context/SettingsContext';
+import type { Settings } from '@/lib/types';
 
 export default function SettingsTab() {
   const { settings, refreshSettings, loading: ctxLoading } = useSettings();
@@ -18,15 +19,14 @@ export default function SettingsTab() {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    if (settings) {
-      setForm({
-        whatsappNumber: settings.whatsappNumber,
-        contactEmail: settings.contactEmail,
-        instagramUrl: settings.instagramUrl,
-        heroTitle: settings.heroTitle,
-        heroSubtitle: settings.heroSubtitle,
-      });
-    }
+    const current = settings as Settings;
+    setForm({
+      whatsappNumber: current.whatsappNumber || '',
+      contactEmail: current.contactEmail || '',
+      instagramUrl: current.instagramUrl || '',
+      heroTitle: current.heroTitle || '',
+      heroSubtitle: current.heroSubtitle || '',
+    });
   }, [settings]);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -34,7 +34,19 @@ export default function SettingsTab() {
     setSaving(true);
     setMessage('');
     try {
-      await setDoc(doc(db, 'settings', 'global'), form, { merge: true });
+      const whatsappNumber = form.whatsappNumber.replace(/\D/g, '');
+      if (whatsappNumber.length < 10) {
+        setMessage('❌ Enter a valid WhatsApp number with country code.');
+        return;
+      }
+      const normalizedForm = {
+        whatsappNumber,
+        contactEmail: form.contactEmail.trim().toLowerCase(),
+        instagramUrl: form.instagramUrl.trim(),
+        heroTitle: form.heroTitle.trim(),
+        heroSubtitle: form.heroSubtitle.trim(),
+      };
+      await setDoc(doc(db, 'settings', 'global'), normalizedForm, { merge: true });
       await refreshSettings();
       setMessage('✅ Settings updated successfully!');
     } catch (err) {

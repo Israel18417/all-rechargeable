@@ -6,6 +6,7 @@ import { collection, getDocs, query, where, limit } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Product } from '@/lib/types';
 import ProductCard from '@/components/ProductCard';
+import BrandLogo from '@/components/BrandLogo';
 
 const categories = [
   { name: 'Fans', icon: '🌀' },
@@ -50,7 +51,9 @@ export default function HomePage() {
           <div className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 text-sm font-medium text-purple-100 backdrop-blur-sm mb-6">
             <span>⚡</span> Trusted rechargeable essentials for homes, offices & businesses
           </div>
-          <div className="text-6xl mb-4">⚡</div>
+          <div className="flex justify-center mb-4">
+            <BrandLogo className="h-20 w-20" />
+          </div>
           <h1 className="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">
             Power Up Your Life
           </h1>

@@ -17,9 +17,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "All Rechargeable+ | Quality Rechargeable Products",
-  description: "Shop premium rechargeable fans, bulbs, torches, and more. Power up your life with All Rechargeable+.",
+  title: "All Rechargeable Plus | Quality Rechargeable Products",
+  description: "Shop premium rechargeable fans, bulbs, torches, and more. Power up your life with All Rechargeable Plus.",
   keywords: "rechargeable, fans, bulbs, torches, power banks, Nigeria",
+  icons: {
+    icon: "/logo-mark.svg",
+    shortcut: "/logo-mark.svg",
+    apple: "/logo-mark.svg",
+  },
 };
 
 export default function RootLayout({

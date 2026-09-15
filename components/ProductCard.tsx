@@ -23,7 +23,7 @@ export default function ProductCard({ product }: ProductCardProps) {
   return (
     <div className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 overflow-hidden group border border-purple-100">
       {/* Product Image */}
-      <Link href={`/products/${product.id}`}>
+      <Link href={`/products/detail?id=${encodeURIComponent(product.id)}`}>
         <div className="relative h-52 bg-purple-50 overflow-hidden">
           {product.imageUrl ? (
             <Image
@@ -53,7 +53,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       {/* Product Info */}
       <div className="p-4">
         <span className="text-xs text-purple-500 font-medium uppercase tracking-wide">{product.category}</span>
-        <Link href={`/products/${product.id}`}>
+        <Link href={`/products/detail?id=${encodeURIComponent(product.id)}`}>
           <h3 className="font-bold text-gray-800 mt-1 mb-1 text-lg line-clamp-2 hover:text-purple-700 transition-colors">
             {product.name}
           </h3>

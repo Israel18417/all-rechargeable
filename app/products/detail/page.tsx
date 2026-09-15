@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { Suspense, useEffect, useState } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
 import { collection, doc, getDoc, getDocs, query, where } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
@@ -11,8 +11,8 @@ import { useSettings } from '@/context/SettingsContext';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 
-export default function ProductDetailPage() {
-  const params = useParams();
+function ProductDetailContent() {
+  const searchParams = useSearchParams();
   const router = useRouter();
   const { addToCart } = useCart();
   const { settings } = useSettings();
@@ -24,7 +24,13 @@ export default function ProductDetailPage() {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const docRef = doc(db, 'products', params.id as string);
+        const productId = searchParams.get('id');
+        if (!productId) {
+          router.push('/products');
+          return;
+        }
+
+        const docRef = doc(db, 'products', productId);
         const docSnap = await getDoc(docRef);
         if (docSnap.exists()) {
           const currentProduct = { id: docSnap.id, ...docSnap.data() } as Product;
@@ -46,14 +52,16 @@ export default function ProductDetailPage() {
         } else {
           router.push('/products');
         }
+
       } catch (error) {
         console.error('Error fetching product:', error);
       } finally {
         setLoading(false);
       }
+
     };
     fetchProduct();
-  }, [params.id, router]);
+  }, [searchParams, router]);
 
   const handleAddToCart = () => {
     if (!product) return;
@@ -153,5 +161,13 @@ export default function ProductDetailPage() {
         </div>
       )}
     </div>
+  );
+}
+
+export default function ProductDetailPage() {
+  return (
+    <Suspense fallback={<div className="text-center py-20 text-purple-600">Loading product...</div>}>
+      <ProductDetailContent />
+    </Suspense>
   );
 }

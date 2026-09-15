@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" role="img" aria-label="All Rechargeable Plus logo">
+  <defs>
+    <linearGradient id="bg" x1="0%" x2="100%" y1="0%" y2="100%">
+      <stop offset="0%" stop-color="#3a1d8f"/>
+      <stop offset="100%" stop-color="#6b32d3"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="700" fill="url(#bg)"/>
+  <g transform="translate(600 210)">
+    <circle cx="0" cy="0" r="118" fill="none" stroke="#f5ecff" stroke-width="22"/>
+    <rect x="-70" y="-70" width="140" height="140" rx="22" fill="#f7b7d5"/>
+    <circle cx="0" cy="0" r="17" fill="#f5ecff" opacity="0.9"/>
+  </g>
+  <text x="600" y="470" text-anchor="middle" font-size="102" font-weight="800" letter-spacing="1" fill="#f5ecff" font-family="Arial, Helvetica, sans-serif">ALL RECHARGEABLE</text>
+  <text x="600" y="590" text-anchor="middle" font-size="102" font-weight="800" letter-spacing="1" fill="#f5ecff" font-family="Arial, Helvetica, sans-serif">PLUS</text>
+</svg>

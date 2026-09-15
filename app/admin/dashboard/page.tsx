@@ -13,6 +13,7 @@ import { auth, db, storage } from '@/lib/firebase';
 import { Product, Category } from '@/lib/types';
 import SettingsTab from './SettingsTab';
 import CategoriesTab from './CategoriesTab';
+import BrandLogo from '@/components/BrandLogo';
 
 
 const emptyForm = {
@@ -83,28 +84,48 @@ export default function AdminDashboard() {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
+    if (!file.type.startsWith('image/')) {
+      setMessage('❌ Please choose an image file.');
+      e.target.value = '';
+      return;
+    }
+    if (file.size > 5 * 1024 * 1024) {
+      setMessage('❌ Image must be 5 MB or smaller.');
+      e.target.value = '';
+      return;
+    }
+    if (imagePreview.startsWith('blob:')) URL.revokeObjectURL(imagePreview);
     setImageFile(file);
     setImagePreview(URL.createObjectURL(file));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const name = form.name.trim();
+    const description = form.description.trim();
+    const price = Number(form.price);
+    if (!name || !description || !Number.isFinite(price) || price < 0) {
+      setMessage('❌ Enter a valid product name, description, and price.');
+      return;
+    }
     setSaving(true);
+    setMessage('');
     try {
       let imageUrl = form.imageUrl;
 
       // Upload image if new file selected
       if (imageFile) {
-        const storageRef = ref(storage, `products/${Date.now()}_${imageFile.name}`);
-        await uploadBytes(storageRef, imageFile);
+        const safeFileName = imageFile.name.replace(/[^a-zA-Z0-9._-]/g, '-');
+        const storageRef = ref(storage, `products/${Date.now()}_${safeFileName}`);
+        await uploadBytes(storageRef, imageFile, { contentType: imageFile.type });
         imageUrl = await getDownloadURL(storageRef);
       }
 
       const productData = {
-        name: form.name,
-        price: Number(form.price),
-        description: form.description,
-        category: form.category,
+        name,
+        price,
+        description,
+        category: form.category.trim() || 'Others',
         inStock: form.inStock,
         featured: form.featured,
         imageUrl,
@@ -123,7 +144,7 @@ export default function AdminDashboard() {
       }
 
       resetForm();
-      fetchProducts();
+      await fetchProducts();
       setActiveTab('products');
     } catch (err) {
       console.error(err);
@@ -144,7 +165,7 @@ export default function AdminDashboard() {
       featured: product.featured,
       imageUrl: product.imageUrl,
     });
-    setImagePreview(product.imageUrl);
+    setImagePreview(product.imageUrl || '');
     setEditingId(product.id);
     setActiveTab('add');
     setShowForm(true);
@@ -155,19 +176,27 @@ export default function AdminDashboard() {
       await deleteDoc(doc(db, 'products', id));
       setMessage('🗑️ Product deleted.');
       setDeleteConfirm(null);
-      fetchProducts();
+      await fetchProducts();
       setTimeout(() => setMessage(''), 3000);
     } catch (err) {
       console.error(err);
+      setMessage('❌ Error deleting product. Please try again.');
     }
   };
 
   const toggleStock = async (product: Product) => {
-    await updateDoc(doc(db, 'products', product.id), { inStock: !product.inStock });
-    fetchProducts();
+    try {
+      await updateDoc(doc(db, 'products', product.id), { inStock: !product.inStock });
+      await fetchProducts();
+    } catch (err) {
+      console.error(err);
+      setMessage('❌ Could not update stock status.');
+      setTimeout(() => setMessage(''), 3000);
+    }
   };
 
   const resetForm = () => {
+    if (imagePreview.startsWith('blob:')) URL.revokeObjectURL(imagePreview);
     setForm(emptyForm);
     setImageFile(null);
     setImagePreview('');
@@ -185,9 +214,9 @@ export default function AdminDashboard() {
     <div className="min-h-screen bg-gray-50">
       {/* Admin Navbar */}
       <nav style={{ background: 'linear-gradient(135deg, #4c1d95, #7c3aed)' }} className="text-white px-6 py-4 flex items-center justify-between shadow-lg">
-        <div className="flex items-center gap-2 font-bold text-xl">
-          <span>⚡</span>
-          <span>All Rechargeable+ Admin</span>
+        <div className="flex items-center gap-3 font-bold text-xl">
+          <BrandLogo className="h-9 w-9" />
+          <span className="uppercase tracking-tight">All Rechargeable Plus</span>
         </div>
         <div className="flex items-center gap-4">
           <a href="/" target="_blank" className="text-purple-200 hover:text-white text-sm">View Store ↗</a>
