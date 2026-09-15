@@ -6,19 +6,31 @@ import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Product } from '@/lib/types';
 import ProductCard from '@/components/ProductCard';
-import { sampleProducts } from '@/lib/sampleCatalog';
-
-const categories = ['All', 'Fans', 'Bulbs', 'Torches', 'Power Banks', 'Radios', 'Others'];
+import { sampleCategories, sampleProducts } from '@/lib/sampleCatalog';
 
 function ProductsContent() {
   const searchParams = useSearchParams();
   const [products, setProducts] = useState<Product[]>(sampleProducts);
   const [filtered, setFiltered] = useState<Product[]>(sampleProducts);
+  const [categories, setCategories] = useState<string[]>(['All', ...sampleCategories.map(cat => cat.name)]);
   const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'All');
 
   useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const q = query(collection(db, 'categories'), orderBy('name', 'asc'));
+        const snap = await getDocs(q);
+        const dbCategories = snap.docs.map(doc => doc.data().name as string).filter(Boolean);
+        const categoryList = dbCategories.length > 0 ? dbCategories : sampleCategories.map(cat => cat.name);
+        setCategories(['All', ...categoryList]);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+        setCategories(['All', ...sampleCategories.map(cat => cat.name)]);
+      }
+    };
+
     const fetchProducts = async () => {
       try {
         const q = query(collection(db, 'products'), where('inStock', '==', true), orderBy('createdAt', 'desc'));
@@ -32,8 +44,16 @@ function ProductsContent() {
         console.error('Error fetching products:', error);
       }
     };
+
+    fetchCategories();
     fetchProducts();
   }, []);
+
+  useEffect(() => {
+    if (categories.length > 1 && !categories.includes(activeCategory)) {
+      setActiveCategory('All');
+    }
+  }, [categories, activeCategory]);
 
   useEffect(() => {
     let result = products;

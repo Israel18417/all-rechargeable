@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc, query, orderBy, serverTimestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Category } from '@/lib/types';
+import { sampleCategories } from '@/lib/sampleCatalog';
 
 export default function CategoriesTab() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -13,14 +14,39 @@ export default function CategoriesTab() {
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState('');
 
+  const seedDefaultCategories = async () => {
+    const q = query(collection(db, 'categories'), orderBy('name', 'asc'));
+    const snap = await getDocs(q);
+    if (!snap.empty) return;
+
+    await Promise.all(
+      sampleCategories.map(cat =>
+        addDoc(collection(db, 'categories'), {
+          name: cat.name,
+          icon: cat.icon,
+          createdAt: serverTimestamp(),
+        })
+      )
+    );
+  };
+
   const fetchCategories = async () => {
     setLoading(true);
     try {
       const q = query(collection(db, 'categories'), orderBy('name', 'asc'));
       const snap = await getDocs(q);
+
+      if (snap.empty) {
+        await seedDefaultCategories();
+        const refreshed = await getDocs(q);
+        setCategories(refreshed.docs.map(d => ({ id: d.id, ...d.data() } as Category)));
+        return;
+      }
+
       setCategories(snap.docs.map(d => ({ id: d.id, ...d.data() } as Category)));
     } catch (err) {
       console.error(err);
+      setCategories(sampleCategories.map((cat, index) => ({ id: `sample-${index}`, ...cat } as Category)));
     } finally {
       setLoading(false);
     }
