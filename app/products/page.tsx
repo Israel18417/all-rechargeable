@@ -6,14 +6,15 @@ import { collection, getDocs, query, where, orderBy } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import { Product } from '@/lib/types';
 import ProductCard from '@/components/ProductCard';
+import { sampleProducts } from '@/lib/sampleCatalog';
 
 const categories = ['All', 'Fans', 'Bulbs', 'Torches', 'Power Banks', 'Radios', 'Others'];
 
 function ProductsContent() {
   const searchParams = useSearchParams();
-  const [products, setProducts] = useState<Product[]>([]);
-  const [filtered, setFiltered] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [products, setProducts] = useState<Product[]>(sampleProducts);
+  const [filtered, setFiltered] = useState<Product[]>(sampleProducts);
+  const [loading, setLoading] = useState(false);
   const [search, setSearch] = useState('');
   const [activeCategory, setActiveCategory] = useState(searchParams.get('category') || 'All');
 
@@ -23,12 +24,12 @@ function ProductsContent() {
         const q = query(collection(db, 'products'), where('inStock', '==', true), orderBy('createdAt', 'desc'));
         const snap = await getDocs(q);
         const data = snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
-        setProducts(data);
-        setFiltered(data);
+        if (data.length > 0) {
+          setProducts(data);
+          setFiltered(data);
+        }
       } catch (error) {
         console.error('Error fetching products:', error);
-      } finally {
-        setLoading(false);
       }
     };
     fetchProducts();

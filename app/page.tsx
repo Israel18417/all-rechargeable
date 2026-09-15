@@ -7,19 +7,13 @@ import { db } from '@/lib/firebase';
 import { Product } from '@/lib/types';
 import ProductCard from '@/components/ProductCard';
 import BrandLogo from '@/components/BrandLogo';
+import { sampleCategories, featuredSampleProducts } from '@/lib/sampleCatalog';
 
-const categories = [
-  { name: 'Fans', icon: '🌀' },
-  { name: 'Bulbs', icon: '💡' },
-  { name: 'Torches', icon: '🔦' },
-  { name: 'Power Banks', icon: '🔋' },
-  { name: 'Radios', icon: '📻' },
-  { name: 'Others', icon: '⚡' },
-];
+const categories = sampleCategories;
 
 export default function HomePage() {
-  const [featuredProducts, setFeaturedProducts] = useState<Product[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [featuredProducts, setFeaturedProducts] = useState<Product[]>(featuredSampleProducts);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchFeatured = async () => {
@@ -32,13 +26,14 @@ export default function HomePage() {
         );
         const snap = await getDocs(q);
         const products = snap.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
-        setFeaturedProducts(products);
+        if (products.length > 0) {
+          setFeaturedProducts(products);
+        }
       } catch (error) {
         console.error('Error fetching featured products:', error);
-      } finally {
-        setLoading(false);
       }
     };
+
     fetchFeatured();
   }, []);
 
